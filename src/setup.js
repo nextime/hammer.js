@@ -5,24 +5,22 @@ Hammer.READY = false;
  * setup events to detect gestures on the document
  */
 function setup() {
-    if(Hammer.READY) {
-        return;
-    }
+  if(Hammer.READY) {
+    return;
+  }
 
-    // find what eventtypes we add listeners to
-    Hammer.event.determineEventTypes();
+  // find what eventtypes we add listeners to
+  Hammer.event.determineEventTypes();
 
-    // Register all gestures inside Hammer.gestures
-    for(var name in Hammer.gestures) {
-        if(Hammer.gestures.hasOwnProperty(name)) {
-            Hammer.detection.register(Hammer.gestures[name]);
-        }
-    }
+  // Register all gestures inside Hammer.gestures
+  Hammer.utils.each(Hammer.gestures, function(gesture){
+    Hammer.detection.register(gesture);
+  });
 
-    // Add touch events on the document
-    Hammer.event.onTouch(Hammer.DOCUMENT, Hammer.EVENT_MOVE, Hammer.detection.detect);
-    Hammer.event.onTouch(Hammer.DOCUMENT, Hammer.EVENT_END, Hammer.detection.detect);
+  // Add touch events on the document
+  Hammer.event.onTouch(Hammer.DOCUMENT, Hammer.EVENT_MOVE, Hammer.detection.detect);
+  Hammer.event.onTouch(Hammer.DOCUMENT, Hammer.EVENT_END, Hammer.detection.detect);
 
-    // Hammer is ready...!
-    Hammer.READY = true;
+  // Hammer is ready...!
+  Hammer.READY = true;
 }
